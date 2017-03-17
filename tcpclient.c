@@ -13,7 +13,7 @@ clientfd = socket(AF_INET, SOCK_STREAM, 0);
 
 struct sockaddr_in myservaddr;
 myservaddr.sin_family = AF_INET;
-myservaddr.sin_addr.s_addr = inet_addr("172.29.249.3");
+myservaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 myservaddr.sin_port = htons (1234);
 connect(clientfd ,&myservaddr, sizeof(myservaddr));
 

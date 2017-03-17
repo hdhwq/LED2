@@ -17,8 +17,8 @@ int main()
     digitalWrite(2,HIGH);
     digitalWrite(3,HIGH);
     digitalWrite(8,HIGH);
-    
-    while(1)
+    digitalWrite(9,LOW);
+    /*while(1)
     {
 		
 		
@@ -44,7 +44,7 @@ int main()
         digitalWrite(3,HIGH);  
         digitalWrite(0,HIGH);
 	}
-	
+	*/
 	
 	return 0;
 }

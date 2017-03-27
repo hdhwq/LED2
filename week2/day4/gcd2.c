@@ -36,6 +36,6 @@ void main()
     scanf("%d%d",&a ,&b);
     printf("a=%d b=%d\n", a, b );
     printf("辗转相除法求最大公约数=%d\n", xc_gcd(a,b) );
-    printf("相减法求最大公约数=%d\n", xc_gcd(a,b) );
-    printf("穷举法求最大公约数=%d\n", xc_gcd(a,b) );
+    printf("相减法求最大公约数=%d\n", xj_gcd(a,b) );
+    printf("穷举法求最大公约数=%d\n", qj_gcd(a,b) );
 }

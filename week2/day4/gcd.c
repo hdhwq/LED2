@@ -1,64 +1,20 @@
 #include<stdio.h>
 
-int zhishu(int num)
-{
-int j=2,z;
-while(j<num)
-{
-if (num%j == 0)
-{
-	z = 1;
-	break;
-}
-else
-	j++;
-if (j == num)
-{
-	z=0;
-	break;
-}
-  
-}
-
-return z;
-}
 
 
 int main ()
 {
-int a,b,max,min,i;
-scanf("%d%d",&a,&b);
- if (a>b)
- {
-	max=a;
-    min=b;
- }
- else
- {
-    max=b;
-    min=a;
-
+	printf("please inset two number\n");
+	int a,b,i;
+	scanf("%d%d",&a,&b);
+	while(a%b!=0)
+	{
+		i = a%b;
+		a = b;
+		b = i;
+	
 	}
- 
- i=max%min;
-while(zhishu(i))
-{
+	printf("GCD=%d\n", b);
 
-if(min>i)
-{
-	max=min;
-	min=i;
-}
-else
-{
-	max=i;
-	min=max;
-}
-
-i=max%min;
-
-}
-
-printf("GCD=%d\n",i);
 return 0;
 }

@@ -86,31 +86,28 @@ void mystrcat(char str1[],char str2[])
 int mystrcmp(char str1[], char str2[])
 {
 	int i=0,j=0;
-	while(str1[i++]==str2[j++])
-	{
-		if (str1[i]=='\0')
-			return 0;	
-	}
-	i=0;
-	j=0;
 	while(1)
 	{
-		if(str1[i++]!=str2[j++])
+		if(str1[i++]==str2[j++])
 		{
-			if(str1[i++]=='\0')
-			{
-		
-				return -1;
-				break;
-			}
-			else if(str2[j++]=='\0')
-			{	
-				return 1;
-				break;
-			}
-		}	
+		if (str1[i]=='\0')
+			return 0;
+			break;	
+		}
+		else if (str1[i++]>str2[j++])
+		{
+			return 1;
+			break;
+		}
+		else 
+		{
+			return -1;
+			break;
+		}
 	}
+	
 }
+	
 
 void mystrcpy(char src[], char dst[])
 {

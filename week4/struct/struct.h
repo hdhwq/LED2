@@ -11,6 +11,7 @@
 typedef struct man
 {
 	char *name;
+//	char sex;
 	int tik;
 }man_t;
 

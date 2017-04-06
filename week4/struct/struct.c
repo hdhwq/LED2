@@ -10,7 +10,7 @@ man_t *man_init(int len)
 	{
 		do{
 		printf("input name  of man:");
-		scanf("%s", name);
+		scanf("%s", name/*&con[i].sex*/);
 		if(name[0] == '\0')
 			continue;
 		pa[i].name = (char *)malloc(strlen(name)+1);

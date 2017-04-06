@@ -1,11 +1,13 @@
 #include "struct.h"
 
+man_t con[];
+
 int main()
 {
 	printf("please input number of man\n");
 	int num;
 	scanf("%d", &num);
-
+	
 	man_t *parr = man_init(num);
 	char name[20];
 	while(1)

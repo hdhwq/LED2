@@ -1,6 +1,33 @@
 #include "2048.h"
 #include "color.h"
+#include "termios_control.h"
 
+static void random_value(game_t *game)
+{
+	int pos;
+	int value;
+	int cnt=0;
+	int empty[16] = {0};
+	int i, j;
+	for(i=0; i<4; i++)
+		for(j=0; j<4; j++)
+			if(game->map[i][j] == 0)
+				empty[cnt++] = 4 * i + j;								
+	if(cnt==0)
+	{	//game over
+		game->status = FAILED;
+		return ;
+	}
+
+	pos = empty[random()%cnt];
+	i = pos / 4;
+	j = pos % 4;
+	value = ( random()%10 ) ? 2 : 4; 	
+	game->map[i][j] = value;
+														
+}
+
+#if 0 
 static void random_value(game_t *game)
 {
 	int ipos, jpos;
@@ -17,7 +44,7 @@ static void random_value(game_t *game)
 		}
 	}
 }
-
+#endif
 void game_init(game_t *game)
 {
 #if 0
@@ -44,7 +71,7 @@ dir_t get_dir()
 	char ch;
 	while(1)
 	{
-		ch = getchar();
+		ch = my_getch();
 		if(ch == '\n')
 			continue;
 		else if(ch == 'w')
@@ -60,13 +87,21 @@ dir_t get_dir()
 
 void draw(game_t *game)
 {
+	int i,j;
+	game->score = 0;
+	for(i=0;i<4;i++)
+	{
+		for(j=0;j<4;j++)
+		{
+			game->score+=game->map[i][j];
+		}	
+	}
 	printf("\033[2J");
 	printf("socre: ");
 	RED(game->score);
-	printf("step:  ");
+	printf("step: ");
 	GREEN(game->step);
 	printf("\n");
-	int i,j;
 	for(i=0; i<4; i++)
 	{
 		printf("-------------------------\n");
@@ -89,72 +124,48 @@ void draw(game_t *game)
 
 void update(game_t *game,dir_t dir)
 {
+    game->step++;
+	int box[4][4]={0};
+	int i,j;
+	for(i=0; i<4; i++)
+		for(j=0; j<4; j++)
+	  		box[i][j] = game->map[i][j];	  
 	if(dir==UP)	
 	{		
-		int i,j;
-		for(i=0; i<4; i++)
+		int i,j,k;
+		for(i=1; i<4; i++)
+		{
 			for(j=0; j<4; j++)
 			{
-				if(game->map[i][j]!=0)
+				if(box[i][j]!=0)
 				{
-					game->map[i-1][j]=game->map[i][j];
-					game->map[i][j]=0;
-					break;
+					box[i][j]=0;
+					k=i-1;
+					while(box[k][j]==0)
+					{
+						if(k=0)
+							break;
+						k--;
+					}
+					if(game->map[i][j]==box[k][j])
+						box[k][j]=box[k][j]*2;	
+					else 
+						box[k+1][j]=game->map[i][j];
 				}
 			}
+		}	
 	}
 
-	else if(dir== DOWN)	
-	{		
-		int i,j;
-		for(i=0; i<4; i++)
-			for(j=0; j<4; j++)
-			{
-				if(game->map[i][j]!=0)
-				{
-					game->map[i+1][j]=game->map[i][j];
-					game->map[i][j]=0;
-					for(i=0;i<4; i++)
-					{
-						for(j=0;j<4;j++)
-						{
-							printf("%d", game->map[i][j]);
-						}
-							printf("\n");
-					}
-	
-					break;
-				}
-			}
+	for(i=0; i<4; i++)
+	{
+		for(j=0; j<4; j++)
+		{
+			game->map[i][j]=box[i][j];
+			
+		}
 	}
-   else if(dir==LEFT)	
-	{		
-		int i,j;
-		for(i=0; i<4; i++)
-			for(j=0; j<4; j++)
-			{
-				if(game->map[i][j]!=0)
-				{
-					game->map[i][j-1]=game->map[i][j];
-					game->map[i][j]=0;
-					break;
-				}
-			}
-	}
-   else if(dir==RIGHT)	
-	{		
-		int i,j;
-		for(i=0; i<4; i++)
-			for(j=0; j<4; j++)
-			{
-				if(game->map[i][j]!=0)
-				{
-					game->map[i][j+1]=game->map[i][j];
-					game->map[i][j]=0;	
-					break;
-				}
-			}
-	}
+
+   random_value(game);
 }
 
 

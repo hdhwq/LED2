@@ -4,6 +4,7 @@
 int main()
 {
 	game_t game;
+	srand(time(0));
 	dir_t dir;
 	int ret;
 	game_init(&game);	
